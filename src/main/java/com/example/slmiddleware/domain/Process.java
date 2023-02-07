@@ -1,22 +1,21 @@
 package com.example.slmiddleware.domain;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*; // JPA API를 가져옴
+import lombok.AllArgsConstructor; // 모든 필드를 포함한 생성자 생성
+import lombok.Getter; // getter 메소드 자동 생성
+import lombok.NoArgsConstructor; // 매개변수 없는 생성자 생성
 import oracle.sql.DATE;
 
+@Entity // JPA에서 관리하는 객체로 매핑
+@Getter // getter 메소드 자동 생성
+@AllArgsConstructor // 모든 필드를 포함한 생성자 생성
+@NoArgsConstructor // 매개변수 없는 생성자 생성
+public class Process extends BaseTimeEntity {
+    @Id // 기본 키
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR") // 시퀀스 생성 전략
+    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1, allocationSize = 1) // 시퀀스 생성 정보
+    private Long PRC_SQ; // 고유 번호
 
-@Entity
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Process extends BaseTimeEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR")
-    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1,
-    allocationSize = 1)
-    private Long PRC_SQ;
 
     @Column
     private String WKCTR_CD;
