@@ -1,17 +1,14 @@
 package com.example.slmiddleware.service;
 
-import com.example.slmiddleware.domain.Process;
+import com.example.slmiddleware.domain.Process_TB;
 import com.example.slmiddleware.domain.ProcessMapper;
 import com.example.slmiddleware.domain.ProcessRepository;
 import com.example.slmiddleware.dto.ResponseProcessMsgDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.RequiredArgsConstructor;
-import org.apache.activemq.artemis.json.JsonObject;
 import org.json.JSONException;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -21,9 +18,7 @@ import org.json.JSONObject;
 @RequiredArgsConstructor // final로 선언된 필드만을 이용해서 생성자를 만드는 어노테이션
 public class CommunicationService {
     private final ProcessRepository processRepository; // 필수 필드인 ProcessRepository 객체
-    private final Queue<Process> queue = new LinkedList<>();// 프로세스를 저장할 큐
-
-
+    private final Queue<Process_TB> queue = new LinkedList<>();// 프로세스를 저장할 큐
 
     public void test(Object message) throws JsonProcessingException, JSONException {
         JSONObject object = new JSONObject(message);  // JSON 객체로 변환
@@ -38,7 +33,7 @@ public class CommunicationService {
         // 문자열을 ResponseProcessMsgDto 배열로 변환
         System.out.println(message);  // 메시지 출력
 
-        Process process = ProcessMapper.MAPPER.toEntity(msg[0]);  // msg[0]을 Process 객체로 변환
+        Process_TB process = ProcessMapper.MAPPER.toEntity(msg[0]);  // msg[0]을 Process 객체로 변환
         queue.add(process);  // 큐에 추가
 
         if(queue.size() >= 50) {  // 큐의 크기가 50 이상일 때

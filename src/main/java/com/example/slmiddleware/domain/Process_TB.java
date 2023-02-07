@@ -4,16 +4,27 @@ import jakarta.persistence.*; // JPA API를 가져옴
 import lombok.AllArgsConstructor; // 모든 필드를 포함한 생성자 생성
 import lombok.Getter; // getter 메소드 자동 생성
 import lombok.NoArgsConstructor; // 매개변수 없는 생성자 생성
+import lombok.Setter;
 import oracle.sql.DATE;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity // JPA에서 관리하는 객체로 매핑
 @Getter // getter 메소드 자동 생성
+@Setter
 @AllArgsConstructor // 모든 필드를 포함한 생성자 생성
 @NoArgsConstructor // 매개변수 없는 생성자 생성
-public class Process extends BaseTimeEntity {
+public class Process_TB extends BaseTimeEntity {
     @Id // 기본 키
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR") // 시퀀스 생성 전략
-    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1, allocationSize = 1) // 시퀀스 생성 정보
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR") // 시퀀스 생성 전략
+//    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1, allocationSize = 1) // 시퀀스 생성 정보
+    @GenericGenerator(
+            name = "PROCESS_seq",
+            strategy = "com.vladmihalcea.hibernate.id.BatchSequenceGenerator",
+            parameters = {@Parameter(name = "sequence", value = "PROCESS_seq"), @Parameter(name = "fetch_size", value = "1000")
+            }
+    )
+
     private Long PRC_SQ; // 고유 번호
 
 
