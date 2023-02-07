@@ -1,15 +1,13 @@
 package com.example.slmiddleware.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import oracle.sql.DATE;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class ResponseProcessMsgDto { // 설비로부터 받아올 데이터들을 저장할 dto 객체
 
     private String WKCTR_CD;
@@ -55,5 +53,8 @@ public class ResponseProcessMsgDto { // 설비로부터 받아올 데이터들�
     private int DATA_B_06;
     private DATE END_DT_06;
 
+    private String ERR_CD;
+    private DATE ERR_DT;
+    private String ERR_PRC_CD;
 
 }
