@@ -57,25 +57,43 @@ public class MqttConfig { // mqtt 통신을 위한 채널 구성
         return adapter;
     }
 
+//    @Bean
+//    @ServiceActivator(inputChannel = "mqttInputChannel")
+//    // mqttInputChannel을 입력 채널로 사용하는 MessageHandler Bean 생성
+//    public MessageHandler inboundMessageHandler() {
+//        return message -> { // message를 수신하면 수행.
+//            //에러 핸들러 message 상태코드를 확인해서 오류일경우 오류 로그 남기고, 오류데이터 저장 후 공정데이터 저장하지않고 종료
+//            String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
+//            System.out.println("Topic:" + topic);
+//            System.out.println("Payload:" + message.getPayload());
+////            if(message.getHeaders().get("statuscode"))
+//            try {
+//                comunicationService.test(message.getPayload());
+//            } catch (JsonProcessingException e) {
+//                e.printStackTrace();
+//            }
+//        };
+//    }
+
+
+
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
-    // mqttInputChannel을 입력 채널로 사용하는 MessageHandler Bean 생성
     public MessageHandler inboundMessageHandler() {
-        return message -> { // message를 수신하면 수행.
+        return message -> {
             //에러 핸들러 message 상태코드를 확인해서 오류일경우 오류 로그 남기고, 오류데이터 저장 후 공정데이터 저장하지않고 종료
             String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
             System.out.println("Topic:" + topic);
             System.out.println("Payload:" + message.getPayload());
+
 //            if(message.getHeaders().get("statuscode"))
             try {
-                comunicationService.test(message.getPayload());
+                comunicationService.parsing(message.getPayload());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
         };
     }
-
-
     @Bean
     public MqttPahoClientFactory mqttPahoClientFactory(){
 
