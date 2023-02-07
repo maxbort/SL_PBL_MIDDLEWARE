@@ -15,18 +15,33 @@ import org.hibernate.annotations.Parameter;
 @AllArgsConstructor // 모든 필드를 포함한 생성자 생성
 @NoArgsConstructor // 매개변수 없는 생성자 생성
 public class Process_TB extends BaseTimeEntity {
-    @Id // 기본 키
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxx_SEQUENCE_GENERATOR") // 시퀀스 생성 전략
-//    @SequenceGenerator(name = "xxx_SEQUENCE_GENERATOR", sequenceName = "xxx_SEQUENCE", initialValue = 1, allocationSize = 1) // 시퀀스 생성 정보
+
+    @Id
+//    @GenericGenerator(
+//            name = "SequenceGenerator",
+//            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+//            parameters = {
+//                    @Parameter(name = "sequence_name", value = "PROCESS_seq"),
+//                    @Parameter(name = "optimizer", value = "pooled"),
+//                    @Parameter(name = "initial_value", value = "1"),
+//                    @Parameter(name = "increment_size", value = "100")
+//            }
+//
+//    )
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "SequenceGenerator"
+//    )
+
     @GenericGenerator(
             name = "PROCESS_seq",
             strategy = "com.vladmihalcea.hibernate.id.BatchSequenceGenerator",
-            parameters = {@Parameter(name = "sequence", value = "PROCESS_seq"), @Parameter(name = "fetch_size", value = "1000")
+            parameters = {
+                    @Parameter(name = "sequence", value = "PROCESS_seq"),
+                    @Parameter(name = "fetch_size", value = "1000")
             }
     )
-
-    private Long PRC_SQ; // 고유 번호
-
+    private Long PRC_SQ;
 
     @Column
     private String WKCTR_CD;
@@ -71,5 +86,9 @@ public class Process_TB extends BaseTimeEntity {
     private int DATA_A_06;
     private int DATA_B_06;
     private DATE END_DT_06;
+
+    private String ERR_CD;
+    private DATE ERR_DT;
+    private String ERR_PRC_CD;
 
 }
